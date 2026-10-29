@@ -79,4 +79,17 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            mail to: 'ankithkini43@gmail.com',
+                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "Build succeeded and deployed.\nImage: ${env.IMAGE_NAME}:${env.BUILD_NUMBER}\nDetails: ${env.BUILD_URL}"
+        }
+        failure {
+            mail to: 'ankithkini43@gmail.com',
+                 subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: "Build failed.\nCheck the console output: ${env.BUILD_URL}console"
+        }
+    }
 }
